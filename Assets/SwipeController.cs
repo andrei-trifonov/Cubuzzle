@@ -20,7 +20,7 @@ public class SwipeController : MonoBehaviour
     IEnumerator TestCoroutine()
     {
 
-    		yield return new WaitForSeconds(1.5f);
+    		yield return new WaitForSeconds(1);
     		active = false;
     		 Rotor.transform.rotation = trans.transform.rotation;
     		Debug.Log(Time.deltaTime);
@@ -33,8 +33,6 @@ public class SwipeController : MonoBehaviour
 
 
         }
-
-
         #region ПК-версия
         if (Input.GetMouseButtonDown(0))
         {
@@ -61,7 +59,7 @@ public class SwipeController : MonoBehaviour
                 isDraging = true;
 
                 startTouch = Input.touches[0].position;
-            }
+            }}
             else if (Input.touches[0].phase == TouchPhase.Ended || Input.touches[0].phase == TouchPhase.Canceled)
             {
                 isDraging = false;
