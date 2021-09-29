@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 public class SwipeController : MonoBehaviour
 {
     public  bool tap, swipeLeft, swipeRight, swipeUp, swipeDown;
@@ -11,23 +11,39 @@ public class SwipeController : MonoBehaviour
     public float swipeDeltaoldz;
     public float swipeDeltaoldy;
     public float grade;
-    public bool active;
+
     public float speed;
     public GameObject player;
+    public GameObject button;
     public GameObject trans;
+    private bool controled;
     void Start(){
-    tap = swipeDown = swipeUp = swipeLeft = swipeRight = false;}
-
+    tap = swipeDown = swipeUp = swipeLeft = swipeRight = false;
+    controled = true;}
     IEnumerator TestCoroutine()
     {
 
-    		yield return new WaitForSeconds(1.0f);
-    		active = false;
-    		 Rotor.transform.rotation = trans.transform.rotation;
+    		yield return new WaitForSeconds(1.5f);
+
+
+
     	//	Debug.Log(Time.deltaTime);
 
     }
+    IEnumerator TestCoroutine2()
+        {
 
+        		yield return new WaitForSeconds(1.1f);
+        		button.GetComponent<Button>().interactable = true;
+                 controled = true;
+
+        	//	Debug.Log(Time.deltaTime);
+
+        }
+       public void StartIENUM(){
+        controled = false;
+        StartCoroutine(TestCoroutine2());
+       }
     private void Update()
     {
 
@@ -38,13 +54,14 @@ public class SwipeController : MonoBehaviour
         #region ПК-версия
         if (Input.GetMouseButtonDown(0))
         {
- if (!active){
 
+if (controled){
+                Rotor.transform.rotation = trans.transform.rotation;
             tap = true;
             isDraging = true;
 
-            startTouch = Input.mousePosition;
-        }}
+            startTouch = Input.mousePosition;}
+        }
         else if (Input.GetMouseButtonUp(0))
         {
             isDraging = false;
@@ -54,22 +71,24 @@ public class SwipeController : MonoBehaviour
         #region Мобильная версия
         if (Input.touches.Length > 0)
         {
+       if (controled){
+                       Rotor.transform.rotation = trans.transform.rotation;
             if (Input.touches[0].phase == TouchPhase.Began)
             {
-                if (!active){
+
                 tap = true;
                 isDraging = true;
 
                 startTouch = Input.touches[0].position;
-            }}
+            }
             else if (Input.touches[0].phase == TouchPhase.Ended || Input.touches[0].phase == TouchPhase.Canceled)
             {
                 isDraging = false;
 
-            }
+            }}
         }
         #endregion
-         if (!active){
+         if (controled){
         //Просчитать дистанцию
         swipeDelta = Vector2.zero;
         if (isDraging)
@@ -131,10 +150,12 @@ public class SwipeController : MonoBehaviour
 
                         swipeDown = false;
                         if (player.GetComponent<Player>().onAir == false){
+
                         Rotor.GetComponent<Generation>().Stop();
+
                         trans.transform.rotation = Rotor.transform.rotation;
                          trans.transform.Rotate((int)-90,(int)0, (int)0,Space.World);
-                         active = true;
+
                          }}
                        if (swipeLeft){
                            swipeLeft = false;
@@ -144,7 +165,8 @@ public class SwipeController : MonoBehaviour
 
                        trans.transform.rotation = Rotor.transform.rotation;
                         trans.transform.Rotate((int)0, (int)90, (int)0,Space.World);
-                        active = true;}
+
+                        }
                          }
                         if (swipeRight){
                         swipeRight = false;
@@ -153,14 +175,16 @@ public class SwipeController : MonoBehaviour
 
                          trans.transform.rotation = Rotor.transform.rotation;
                          trans.transform.Rotate((int)0, (int)-90, (int)0,Space.World);
-                         active = true;}}
+
+                         }}
                         if (swipeUp){
                         swipeUp = false;
                          if (player.GetComponent<Player>().onAir == false){
                         Rotor.GetComponent<Generation>().Stop();
                          trans.transform.rotation = Rotor.transform.rotation;
                          trans.transform.Rotate((int)90,(int)0, (int)0,Space.World);
-                         active = true;
+
+
 
 }
                          }
