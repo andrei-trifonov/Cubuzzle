@@ -23,4 +23,5 @@ public class Block : MonoBehaviour
         gameObject.GetComponent<MeshRenderer>().enabled = false;
         }
     }
+
 }

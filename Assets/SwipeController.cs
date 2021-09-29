@@ -13,6 +13,7 @@ public class SwipeController : MonoBehaviour
     public float grade;
     public bool active;
     public float speed;
+    public GameObject player;
     public GameObject trans;
     void Start(){
     tap = swipeDown = swipeUp = swipeLeft = swipeRight = false;}
@@ -20,19 +21,20 @@ public class SwipeController : MonoBehaviour
     IEnumerator TestCoroutine()
     {
 
-    		yield return new WaitForSeconds(1);
+    		yield return new WaitForSeconds(1.0f);
     		active = false;
     		 Rotor.transform.rotation = trans.transform.rotation;
-    		Debug.Log(Time.deltaTime);
+    	//	Debug.Log(Time.deltaTime);
 
     }
+
     private void Update()
     {
-        if (active){
+
            Rotor.transform.rotation = Quaternion.Slerp(Rotor.transform.rotation, trans.transform.rotation ,  Time.deltaTime * speed);
 
 
-        }
+
         #region ПК-версия
         if (Input.GetMouseButtonDown(0))
         {
@@ -67,7 +69,7 @@ public class SwipeController : MonoBehaviour
             }
         }
         #endregion
-
+         if (!active){
         //Просчитать дистанцию
         swipeDelta = Vector2.zero;
         if (isDraging)
@@ -115,7 +117,7 @@ public class SwipeController : MonoBehaviour
 
 
         }
-
+    }
     }
 
     private void Reset()
@@ -126,34 +128,43 @@ public class SwipeController : MonoBehaviour
 
 
                         if (swipeDown){
+
                         swipeDown = false;
+                        if (player.GetComponent<Player>().onAir == false){
+                        Rotor.GetComponent<Generation>().Stop();
                         trans.transform.rotation = Rotor.transform.rotation;
                          trans.transform.Rotate((int)-90,(int)0, (int)0,Space.World);
                          active = true;
-
-                         }
-
-
-
-
+                         }}
                        if (swipeLeft){
-                       swipeLeft = false;
+                           swipeLeft = false;
+
+                        if (player.GetComponent<Player>().onAir == false){
+                       Rotor.GetComponent<Generation>().Stop();
+
                        trans.transform.rotation = Rotor.transform.rotation;
                         trans.transform.Rotate((int)0, (int)90, (int)0,Space.World);
-                        active = true;
+                        active = true;}
                          }
                         if (swipeRight){
                         swipeRight = false;
+                        if (player.GetComponent<Player>().onAir == false){
+                        Rotor.GetComponent<Generation>().Stop();
+
                          trans.transform.rotation = Rotor.transform.rotation;
                          trans.transform.Rotate((int)0, (int)-90, (int)0,Space.World);
-                         active = true;}
+                         active = true;}}
                         if (swipeUp){
-                         trans.transform.rotation = Rotor.transform.rotation;
-                                                 trans.transform.Rotate((int)90,(int)0, (int)0,Space.World);
-                                                 active = true;
                         swipeUp = false;
+                         if (player.GetComponent<Player>().onAir == false){
+                        Rotor.GetComponent<Generation>().Stop();
+                         trans.transform.rotation = Rotor.transform.rotation;
+                         trans.transform.Rotate((int)90,(int)0, (int)0,Space.World);
+                         active = true;
 
+}
                          }
+
 StartCoroutine(TestCoroutine());
                 }
 

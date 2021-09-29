@@ -258,6 +258,14 @@ public class Generation : MonoBehaviour
 
 
     }
+    public void Stop(){
+                 Player.GetComponent<Rigidbody>().useGravity = false;
+                        Player.GetComponent<BoxCollider>().isTrigger=true;
+                }
+    public void Go(){
+            Player.GetComponent<Rigidbody>().useGravity = true;
+            Player.GetComponent<BoxCollider>().isTrigger = false;
+            }
     // Update is called once per frame
     void Update()
     {
