@@ -17,6 +17,7 @@ public class SwipeController : MonoBehaviour
     public GameObject button;
     public GameObject trans;
     private bool controled;
+    public bool isLabirinth;
     void Start(){
     tap = swipeDown = swipeUp = swipeLeft = swipeRight = false;
     controled = true;}
@@ -150,8 +151,10 @@ if (controled){
 
                         swipeDown = false;
                         if (player.GetComponent<Player>().onAir == false){
-
-                        Rotor.GetComponent<Generation>().Stop();
+                                    if (!isLabirinth)
+                       Rotor.GetComponent<Generation>().Stop();
+                            else
+                           Rotor.GetComponent<Generation2>().Stop();
 
                         trans.transform.rotation = Rotor.transform.rotation;
                          trans.transform.Rotate((int)-90,(int)0, (int)0,Space.World);
@@ -161,9 +164,11 @@ if (controled){
                            swipeLeft = false;
 
                         if (player.GetComponent<Player>().onAir == false){
-                       Rotor.GetComponent<Generation>().Stop();
-
-                       trans.transform.rotation = Rotor.transform.rotation;
+                        if (!isLabirinth)
+                        Rotor.GetComponent<Generation>().Stop();
+                        else
+                        Rotor.GetComponent<Generation2>().Stop();
+                        trans.transform.rotation = Rotor.transform.rotation;
                         trans.transform.Rotate((int)0, (int)90, (int)0,Space.World);
 
                         }
@@ -171,8 +176,10 @@ if (controled){
                         if (swipeRight){
                         swipeRight = false;
                         if (player.GetComponent<Player>().onAir == false){
+                        if (!isLabirinth)
                         Rotor.GetComponent<Generation>().Stop();
-
+                            else
+                           Rotor.GetComponent<Generation2>().Stop();
                          trans.transform.rotation = Rotor.transform.rotation;
                          trans.transform.Rotate((int)0, (int)-90, (int)0,Space.World);
 
@@ -180,7 +187,10 @@ if (controled){
                         if (swipeUp){
                         swipeUp = false;
                          if (player.GetComponent<Player>().onAir == false){
+                         if (!isLabirinth)
                         Rotor.GetComponent<Generation>().Stop();
+                           else
+                           Rotor.GetComponent<Generation2>().Stop();
                          trans.transform.rotation = Rotor.transform.rotation;
                          trans.transform.Rotate((int)90,(int)0, (int)0,Space.World);
 
